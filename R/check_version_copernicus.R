@@ -24,7 +24,7 @@
 #' check_version_copernicus('LAI')
 #' }
 #' @export
-check_version_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "FCOVER", "FAPAR",
+check_version_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", "FCOVER", "FAPAR",
     "VCI", "VPI", "DMP", "BA"), server = copernicus_options("server"), user = copernicus_options("user"),
     password = copernicus_options("password")) {
 
@@ -32,8 +32,8 @@ check_version_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "F
         stop("Set a user and password via 'copernicus_options()' to access COPERNICUS data portal")
 
     product <- match.arg(product)
-    collection <- c("Dynamics/LAI_V1/", "Dynamics/FCOVER_V1/", "Dynamics/FAPAR_V1/", "Indices/NDVI_V1/",
-        "Indices/NDVI_V2/", "Indices/VCI_V1/", "Indices/VPI_V1/", "BIOMASS/DMP_V1/", "Fire_Disturbance/BA_V1/")
+    collection <- c("Properties/LAI_V1/", "Properties/FCOVER_V1/", "Properties/FAPAR_V1/", "Indicators/NDVI_1km_V1/",
+                "Indicators/NDVI_1km_V2/", "Indicators/VCI_V1/", "Indicators/VPI_V1/", "Biomass/DMP_V1/", "Fire_Disturbance/BA_V1/")
 
     auth <- httr::authenticate(user = user, password = password)
     httr::set_config(auth)
@@ -48,7 +48,7 @@ check_version_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "F
     h1 <- rvest::html(url[1]) %>% rvest::html_nodes("tr~ tr+ tr a") %>% rvest::html_attr("href") %>% rvest::html() %>%
           rvest::html_nodes("a") %>% rvest::html_attr("href") %>% stringr::str_subset("zip$") %>% magrittr::extract(1)
 
-    if (product != "NDVI_V1") {
+    if (product != "NDVI_1km_V1") {
         # get the list of files
         h2 <- rvest::html(url[2]) %>% rvest::html_nodes("tr~ tr+ tr a") %>% rvest::html_attr("href") %>% rvest::html() %>%
               rvest::html_nodes("a") %>% rvest::html_attr("href") %>% stringr::str_subset("zip$") %>% magrittr::extract(1)
