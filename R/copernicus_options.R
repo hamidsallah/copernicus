@@ -3,7 +3,7 @@
 # be documented.
 MYPKGOPTIONS <- settings::options_manager(downloadPath = "zip",
     outPath = "tif", outProj = "+init=epsg:32662", pixelSize = "asIn",
-    gdalPath = "C:/OSGeo4W64/bin/", server = "http://land.copernicus.vgt.vito.be/PDF///datapool/Vegetation/",
+    gdalPath = "C:/OSGeo4W64/bin/", server = "http://land.copernicus.vgt.vito.be/PDF//datapool/Vegetation/",
     user = "", password = "", ntry = 5, resamplingType = "near")
 
 # User function that gets exported:
