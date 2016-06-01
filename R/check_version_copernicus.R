@@ -33,14 +33,14 @@ check_version_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "
 
     product <- match.arg(product)
     collection <- c("Properties/LAI_V1/", "Properties/FCOVER_V1/", "Properties/FAPAR_V1/", "Indicators/NDVI_1km_V1/",
-                "Indicators/NDVI_1km_V2/", "Indicators/VCI_V1/", "Indicators/VPI_V1/", "Biomass/DMP_V1/", "Fire_Disturbance/BA_V1/")
+                    "Indicators/NDVI_1km_V2/", "Indicators/VCI_V1/", "Indicators/VPI_V1/", "Biomass/DMP_V1/", "Fire_Disturbance/BA_V1/")
 
     auth <- httr::authenticate(user = user, password = password)
     httr::set_config(auth)
 
     url <- paste0(server, stringr::str_subset(collection, product))
 
-    if (product %in% c("NDVI_V1", "LAI", "FCOVER", "FAPAR"))
+    if (product %in% c("NDVI_1km_V1", "LAI", "FCOVER", "FAPAR"))
         d <- c("2014/01/06", "2014/12/06") else d <- c("2014/01/01", "2014/12/01")
 
     url <- paste0(url, d, "/?cov=tile")
