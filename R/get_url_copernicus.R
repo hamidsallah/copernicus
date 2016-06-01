@@ -11,7 +11,7 @@
 #' @param tileH H index of the tile COPERNICUS system (\code{numeric} or \code{character})
 #' @param tileV V index of the tile COPERNICUS system (\code{numeric} or \code{character})
 #' @param groupByDate logical value indicating whether to return a list of vector with url's grouped by date, or a vector of url's. Default is \code{FALSE}.
-#' @param server url of the COPERNICUS data server. Default to 'http://land.copernicus.vgt.vito.be/PDF///datapool/Vegetation/', see 'copernicus_options('server')'
+#' @param server url of the COPERNICUS data server. Default to 'http://land.copernicus.vgt.vito.be/PDF//datapool/Vegetation/', see 'copernicus_options('server')'
 #' @param check_version logical value indicating whether the algorithm version should be checked on the server data portal. Default to FALSE. See \code{\link{check_version_copernicus}}
 #' @return
 #' a character \code{vector} of url('s)
@@ -23,7 +23,7 @@
 #' get_url_copernicus(product = 'NDVI_V2',begin = '20130101', end = '20130131',
 #'                    tileH = 19:20, tileV = 3:4)
 #' @export
-get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "FCOVER", "FAPAR",
+get_url_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", "FCOVER", "FAPAR",
     "VCI", "VPI", "DMP", "BA"), begin, end, tileH, tileV, groupByDate = FALSE, server = copernicus_options("server"),
     check_version = FALSE) {
 
