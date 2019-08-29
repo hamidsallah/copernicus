@@ -111,7 +111,7 @@ get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI_V1", "FCOV
         version, ".zip")
 
     # get final urls
-    urls <- paste(url, y, m, d, folder_name, product_name, sep = "/")
+    urls <- paste(url,collection, y, m, d, folder_name, product_name, sep = "/")
     if(groupByDate)
       urls <- split(urls,lubridate::ymd(paste(y,m,d)))
 
