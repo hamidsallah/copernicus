@@ -3,7 +3,7 @@
 #' Get COPERNICUS url's for a given product, tile, and period of time
 #' @usage
 #' get_url_copernicus(product,begin,end,tileH,tileV,groupByDate,server,check_version = FALSE)
-#' @param product one of the following: 'NDVI_V1' (Normalized Difference Vegetation Index - VGT instrument),'NDVI_V2' (Normalized Difference Vegetation Index - PROBAV instrument),'LAI' (Leaf Area Index),'FCOVER' (Fraction of Vegetation Green Cover),
+#' @param product one of the following: 'NDVI_1km_V1' (Normalized Difference Vegetation Index - VGT instrument),'NDVI_1km_V2' (Normalized Difference Vegetation Index - PROBAV instrument),'LAI' (Leaf Area Index),'FCOVER' (Fraction of Vegetation Green Cover),
 #' 'FAPAR' (Fraction of Absorbed Photosynthetically Active Radiation),'VCI' (Vegetation Condition Index),'VPI' (Vegetation Productivity Index),
 #' 'DMP' (Dry Matter Productivity),'BA' (Burnt Areas)
 #' @param begin begin of the time serie. \code{Date} object, \code{numeric} or \code{character} of length 1 that can be transformed to a \code{Date} using \code{\link[lubridate]{ymd}}. See \code{?ymd} for more details. \code{ymj} format is also accepted (with \code{j} being the day of the year)
@@ -23,7 +23,7 @@
 #' get_url_copernicus(product = 'NDVI_V2',begin = '20130101', end = '20130131',
 #'                    tileH = 19:20, tileV = 3:4)
 #' @export
-get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI_V1", "FCOVER", "FAPAR",
+get_url_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", "FCOVER", "FAPAR",
     "VCI", "VPI", "DMP", "BA"), begin, end, tileH, tileV, groupByDate = FALSE, server = copernicus_options("server"),
     check_version = FALSE) {
 
@@ -43,7 +43,7 @@ get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI_V1", "FCOV
 
     # add xx days at the end and remove xx at the beginning because of a time lag for certain
     # products
-    if (product %in% c("NDVI_V1", "NDVI_V2", "FCOVER", "FAPAR")) {
+    if (product %in% c("NDVI_1km_V1", "LAI", "FCOVER", "FAPAR")) {
         begin <- begin - 18
         end <- end - 18
     } else if (product == "BA") {
@@ -57,7 +57,7 @@ get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI_V1", "FCOV
     ym <- rep(be_month, each = 3)  # there is 3 dates per month, so replicate 3 times
     y <- lubridate::year(ym)
     m <- lubridate::month(ym)
-    if (product %in% c("NDVI_V1", "NDVI_V2", "FCOVER", "FAPAR")) {
+    if (product %in% c("NDVI_1km_V1", "LAI", "FCOVER", "FAPAR")) {
         dm <- c(3, 13, 23)  # days of the months
         d <- list(`28` = dm, `29` = dm + 1, `30` = dm + 2, `31` = dm + 3)  # the sequence is different for months with 28,29,30,31 days...
         d <- unlist(d[as.character(lubridate::days_in_month(be_month))])  # computes the number of days in each month and assign the day sequences
@@ -83,7 +83,7 @@ get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI_V1", "FCOV
                 version <- check_version_copernicus(product)[1]
                 version <- rep(version,length(ym))
             } else {
-                if (product == "NDVI_V2"){
+                if (product == "NDVI_1km_V2"){
                   version <- ifelse(ym < as.Date(lubridate::ymd("20140101")), "2.0", "2.1")
                 } else{
                   version <- "1.0"
@@ -103,10 +103,16 @@ get_url_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI_V1", "FCOV
     d <- d[id]
 
     # create product name
-    folder_name <- paste0(stringr::str_replace(product, "_V[12]", ""), "_", a, "_", sensor, "_V",
-                          stringr::str_extract(version, "[12]"))
+    #folder_name <- paste0(stringr::str_replace(product, "_V[12]", ""), "_", a, "_", sensor, "_V",
+    #                      stringr::str_extract(version, "[12]"))
     #folder_name <- paste0(stringr::str_replace(product, "_V[12]", ""), "_", a, "_", sensor, "_V",  stringr::str_extract(version, "[12]"))
-    product_name <- paste0("g2_BIOPAR_", stringr::str_replace(product, "_V[12]", ""), "_", a, "_", "H",
+    #product_name <- paste0("g2_BIOPAR_", stringr::str_replace(product, "_V[12]", ""), "_", a, "_", "H",
+    #    rep(tileH, each = length(a)), "V", rep(tileV, each = length(a)), "_", sensor, "_V",
+    #    version, ".zip")
+    
+    folder_name <- paste0(stringr::str_replace(product, "(_1km)*_V[12]", ""), "_", a, "_", sensor, "_V",
+                          stringr::str_extract(version, "[12]"))
+    product_name <- paste0("g2_BIOPAR_", stringr::str_replace(product, "(_1km)*_V[12]", ""), "_", a, "_", "H",
         rep(tileH, each = length(a)), "V", rep(tileV, each = length(a)), "_", sensor, "_V",
         version, ".zip")
 
