@@ -38,7 +38,7 @@
 #' }
 #'
 #' @export
-download_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "FCOVER", "FAPAR", "VCI",
+download_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI_1km_V2", "FCOVER", "FAPAR", "VCI",
     "VPI", "DMP", "BA"), begin, end, extent, tileH, tileV, outPath = copernicus_options("downloadPath"),
     user = copernicus_options("user"), password = copernicus_options("password"), ntry = copernicus_options("ntry"), allowParallel = FALSE, ...) {
 
