@@ -96,6 +96,13 @@ get_url_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", 
     # keep only those that are between begin and end
     id <- (ym %within% be)
     a <- a[id]
+    
+    a2<-str_replace(a,"0000", "")
+    a3 <- as.Date(lubridate::parse_date_time(a2, orders = c("ymd", "ymj")))
+
+    y2 <- lubridate::year(a3)
+    m2 <- lubridate::month(a3)
+    d2 <-lubridate::day(a3)
     sensor <- sensor[id]
     version <- version[id]
     y <- y[id]
@@ -117,7 +124,7 @@ get_url_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", 
         version, ".zip")
 
     # get final urls
-    urls <- paste(url, y, m, d, folder_name, product_name, sep = "/")
+    urls <- paste(url, y2, m2, d2, folder_name, product_name, sep = "/")
     if(groupByDate)
       urls <- split(urls,lubridate::ymd(paste(y,m,d)))
 
