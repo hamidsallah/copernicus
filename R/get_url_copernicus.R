@@ -105,9 +105,9 @@ get_url_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", 
     d2 <-lubridate::day(a3)
     sensor <- sensor[id]
     version <- version[id]
-    y <- y[id]
-    m <- m[id]
-    d <- d[id]
+    #y <- y[id]
+    #m <- m[id]
+    #d <- d[id]
 
     # create product name
     #folder_name <- paste0(stringr::str_replace(product, "_V[12]", ""), "_", a, "_", sensor, "_V",
