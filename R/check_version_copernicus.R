@@ -24,7 +24,7 @@
 #' check_version_copernicus('LAI')
 #' }
 #' @export
-check_version_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "FCOVER", "FAPAR",
+check_version_copernicus <- function(product = c("NDVI_1km_V1", "NDVI_1km_V2", "LAI", "FCOVER", "FAPAR",
     "VCI", "VPI", "DMP", "BA"), server = copernicus_options("server"), user = copernicus_options("user"),
     password = copernicus_options("password")) {
 
@@ -40,7 +40,7 @@ check_version_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "F
 
     url <- paste0(server, stringr::str_subset(collection, product))
 
-    if (product %in% c("NDVI_V1", "LAI", "FCOVER", "FAPAR"))
+    if (product %in% c("NDVI_1km_V1", "LAI", "FCOVER", "FAPAR"))
         d <- c("2014/01/06", "2014/12/06") else d <- c("2014/01/01", "2014/12/01")
 
     url <- paste0(url, d, "/?cov=tile")
@@ -48,7 +48,7 @@ check_version_copernicus <- function(product = c("NDVI_V1", "NDVI_V2", "LAI", "F
     h1 <- rvest::html(url[1]) %>% rvest::html_nodes("tr~ tr+ tr a") %>% rvest::html_attr("href") %>% rvest::html() %>%
           rvest::html_nodes("a") %>% rvest::html_attr("href") %>% stringr::str_subset("zip$") %>% magrittr::extract(1)
 
-    if (product != "NDVI_V1") {
+    if (product != "NDVI_1km_V1") {
         # get the list of files
         h2 <- rvest::html(url[2]) %>% rvest::html_nodes("tr~ tr+ tr a") %>% rvest::html_attr("href") %>% rvest::html() %>%
               rvest::html_nodes("a") %>% rvest::html_attr("href") %>% stringr::str_subset("zip$") %>% magrittr::extract(1)
