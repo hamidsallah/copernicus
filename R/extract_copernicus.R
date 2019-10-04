@@ -107,7 +107,7 @@
 extract_copernicus <- function(fnames, extent, extend, convertDN = TRUE, outProj = copernicus_options("outProj"),
     pixelSize = copernicus_options("pixelSize"), resamplingType = c("near", "bilinear", "cubic",
         "cubicspline"), outPath = copernicus_options("outPath"), job = "", gdalPath = copernicus_options("gdalPath"),
-    zip = TRUE, layers = 1, allowParallel = FALSE, ...) {
+    zip = TRUE, layers = c(1,2,3,4), allowParallel = FALSE, ...) {
 
     gdalUtils::gdal_setInstallation(search_path = gdalPath)  # set gdal path for gdalUtils
 
