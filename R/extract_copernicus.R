@@ -263,7 +263,7 @@ extract_copernicus <- function(fnames, extent, extend, convertDN = TRUE, outProj
                 }
 
                 if(nrow(h5info) == 1){
-                  layer <- NULL # remove sd_index when there is only one layer, else gdal_translate gives an error
+                  sd_index <- NULL # remove sd_index when there is only one layer, else gdal_translate gives an error
                 } else {
                     sd_index <- layer
                   h5info <- h5info[layer, ]  # extract the selected layers only
