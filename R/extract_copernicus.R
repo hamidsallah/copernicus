@@ -266,7 +266,7 @@ extract_copernicus <- function(fnames, extent, extend, convertDN = TRUE, outProj
                   sd_index <- NULL # remove sd_index when there is only one layer, else gdal_translate gives an error
                 } else {
                     sd_index <- layer
-                  h5info <- h5info[sd_index, ]  # extract the selected layers only
+                  h5info <- h5info[layer, ]  # extract the selected layers only
                 }
 
                 att <- rhdf5::h5readAttributes(f_h5, h5info$name)
